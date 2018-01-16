@@ -13,13 +13,35 @@ class TreeNode {
     }
 }
 
+class BinarySearchTree {
+    public TreeNode addNode(TreeNode tree, int value) {
+        // check if we are in a tree
+        if (tree == null) {
+            return new TreeNode(value);
+        }
+        
+        /*add node left or right branch*/
+        // insert in right branch
+        if (tree.value > value) {
+            tree.right = this.addNode(tree.right, value);
+            return tree;
+        }
+        // insert in left branch
+        if (tree.value < value) {
+            tree.left = this.addNode(tree.left, value);
+            return tree;
+        }
+        
+        /*node already in list*/
+        return tree;
+    }
+}
+
 class Application {
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
-        // TODO code application logic here
+        
+        
     }
     
 }
