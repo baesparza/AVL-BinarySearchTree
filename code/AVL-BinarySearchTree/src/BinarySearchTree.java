@@ -16,7 +16,7 @@ public class BinarySearchTree {
         // check if we are in a node
         if (tree == null) return;
         this.printInOrder(tree.left);
-        System.out.print(tree.value + " ");
+        System.out.println(tree.value + ", " + tree.height);
         this.printInOrder(tree.right);
     } 
     
