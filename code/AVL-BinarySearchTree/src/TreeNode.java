@@ -9,8 +9,7 @@
  */
 public class TreeNode {
     public TreeNode left, right;
-    public int value;
-    public int height;
+    public int value, height, balance;
     /**
      * Constructor initialize data and pointer to other nodes
      * @param value data to be stored in this node

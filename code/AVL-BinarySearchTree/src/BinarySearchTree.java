@@ -16,7 +16,7 @@ public class BinarySearchTree {
         // check if we are in a node
         if (tree == null) return;
         this.printInOrder(tree.left);
-        System.out.println(tree.value + ", " + tree.height);
+        System.out.println(tree.value + ", " + tree.height + ", " + tree.balance);
         this.printInOrder(tree.right);
     } 
     
@@ -71,32 +71,29 @@ public class BinarySearchTree {
         }
         
         /*remove this node*/
-        if (tree.value == num) {
-            /*check if we are in a leaf*/
-            if (tree.right == null && tree.left == null) // unlink this node
-                return null;
-            /*Search node to replace this*/
-            TreeNode current = null; // iterator to search replacement
-            if (tree.left != null) {
-                // search max value in left branch
-                current = tree.left;
-                while (current.right != null) // stop before null node
-                    current = current.right;
-                /*change values*/
-                tree.value = current.value;
-                tree.left = this.removeNode(tree.left, tree.value);
-            } else {
-                // search min value in right branch
-                current = tree.right;
-                while (current.left != null) // stop before null node
-                    current = current.left;
-                /*change values*/
-                tree.value = current.value;
-                tree.right = this.removeNode(tree.right, tree.value);
-            }
-        }
+        /*check if we are in a leaf*/
+        if (tree.right == null && tree.left == null) // unlink this node
+            return null;
         
-        /*Value never existed in tree*/
+        /*Search node to replace this*/
+        TreeNode current = null; // iterator to search replacement
+        if (tree.left != null) {
+            // search max value in left branch
+            current = tree.left;
+            while (current.right != null) // stop before null node
+                current = current.right;
+            /*change values*/
+            tree.value = current.value;
+            tree.left = this.removeNode(tree.left, tree.value);
+        } else {
+            // search min value in right branch
+            current = tree.right;
+            while (current.left != null) // stop before null node
+                current = current.left;
+            /*change values*/
+            tree.value = current.value;
+            tree.right = this.removeNode(tree.right, tree.value);
+        }
         return tree;
     }
 }

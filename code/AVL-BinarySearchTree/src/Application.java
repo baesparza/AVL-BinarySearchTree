@@ -14,18 +14,17 @@ public class Application {
         /*add this nodes*/
         root = bst.addNode(root, 7);
         root = bst.addNode(root, 2);
-        root = bst.addNode(root, 7);
         root = bst.addNode(root, 8);
         root = bst.addNode(root, 1);
         root = bst.addNode(root, 4);
         root = bst.addNode(root, 5);
         root = bst.addNode(root, 3);
-        root = bst.addNode(root, 2);
         root = bst.addNode(root, 10);
         root = bst.addNode(root, 9);
+        root = bst.addNode(root, 6);
 
         // print tree
-        System.out.println("Tree:");
+        System.out.println("Tree:\nv, h, b");
         bst.printInOrder(root);
         /*
         // remove this nodes

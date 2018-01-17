@@ -10,6 +10,7 @@
 public class AVL extends BinarySearchTree{
     /**
      * Add node to tree
+     * Fix AVL property
      * Recalculate height of each node
      * 
      * @param tree were new node will be added
@@ -20,8 +21,11 @@ public class AVL extends BinarySearchTree{
     public TreeNode addNode(TreeNode tree, int value) {
         // add node as normal to tree
         tree = super.addNode(tree, value);
+        
         // check height
         tree.height = this.calculateHeight(tree);
+        // with the height calculate the balance of each node
+        this.calculateBalance(tree);
         return tree;
     }
     
@@ -58,6 +62,28 @@ public class AVL extends BinarySearchTree{
         ) + 1;
         
         return tree.height;
+    }
+    
+    /**
+     * Calculate balance of every node
+     * based on the height
+     * @param tree to calculate balance property
+     */
+    public void calculateBalance(TreeNode tree) {
+        // if no node return
+        if (tree == null) return;
+        
+        // left.height - right.height
+        // if left is bigger result is 2 or 1
+        // if right is bigger result is -2 or -1
+        // if both are balanced result is 0
+        tree.balance = 
+                ((tree.left != null) ? tree.left.height : -1) - 
+                ((tree.right != null) ? tree.right.height : -1);
+        
+        // visit and calculate left and right node balance recursive
+        this.calculateBalance(tree.left); 
+        this.calculateBalance(tree.right); 
     }
     
 }
