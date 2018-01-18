@@ -26,6 +26,7 @@ public class AVL extends BinarySearchTree{
         tree.height = this.calculateHeight(tree);
         // with the height calculate the balance of each node
         this.calculateBalance(tree);
+        tree = this.fixAVLProperty(tree);
         return tree;
     }
     
@@ -87,6 +88,35 @@ public class AVL extends BinarySearchTree{
     }
     
     private TreeNode leftLeftRotation(TreeNode tree) {
+        TreeNode temp = tree.left;
+        tree.left = temp.right;
+        temp.right = tree;
+        return temp;
+    }
+    private TreeNode leftRightRotation(TreeNode tree) {
+        TreeNode temp = tree.left.right;
+        tree.left.right = temp.left;
+        temp.left = tree.left;
+        tree.left = temp;
+        
+        tree = this.leftLeftRotation(tree);
+        
+        return tree;
+    }
+    private TreeNode RightRightRotation(TreeNode tree) {
+        TreeNode temp = tree.right;
+        tree.right = temp.left;
+        temp.left = tree;
+        return temp;
+    }
+    private TreeNode RightLeftRotation(TreeNode tree) {
+        TreeNode temp = tree.right.left;
+        tree.right.left = temp.left;
+        temp.right = tree.right;
+        tree.right = temp;
+        
+        tree = this.RightRightRotation(tree);
+        
         return tree;
     }
     
@@ -99,26 +129,28 @@ public class AVL extends BinarySearchTree{
         // check if we are in a node
         if (tree == null) return null;
         
-        // balance tree first
-        // then visit branches
-        // since tree will be balance each insertion or deletion
+        // balance branches first
+        tree.left = this.fixAVLProperty(tree.left);
+        tree.right = this.fixAVLProperty(tree.right);
+        
+        // then balance this tree
         if (tree.balance == -2){
             // right branch is unbalance
-            if (tree.left.balance == -1) {
-                // double rotation
-                
-            }
-            if (tree.left.balance == 1) {
-                // sinple rotation
-            }
-        }
-        if (tree.balance == 2) {
-            // left branch is unbalance
-            if (tree.right.balance == -1) {
-                // sinple rotation
-            }
             if (tree.right.balance == 1) {
                 // double rotation
+                tree = this.RightLeftRotation(tree);
+            } else if (tree.right.balance == -1) {
+                // sinple rotation
+                tree = this.RightRightRotation(tree);
+            }
+        } else if (tree.balance == 2) {
+            // left branch is unbalance
+            if (tree.left.balance == 1) {
+                // sinple rotation
+                tree = this.leftLeftRotation(tree);
+            } else if (tree.left.balance == -1) {
+                // double rotation
+                tree = this.leftRightRotation(tree);
             }
         }
         
