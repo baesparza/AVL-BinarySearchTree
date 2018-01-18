@@ -86,4 +86,44 @@ public class AVL extends BinarySearchTree{
         this.calculateBalance(tree.right); 
     }
     
+    private TreeNode leftLeftRotation(TreeNode tree) {
+        return tree;
+    }
+    
+    /**
+     * Check if each node is balanced
+     * @param tree to be balanced
+     * @return balanced tree
+     */
+    private TreeNode fixAVLProperty(TreeNode tree) {
+        // check if we are in a node
+        if (tree == null) return null;
+        
+        // balance tree first
+        // then visit branches
+        // since tree will be balance each insertion or deletion
+        if (tree.balance == -2){
+            // right branch is unbalance
+            if (tree.left.balance == -1) {
+                // double rotation
+                
+            }
+            if (tree.left.balance == 1) {
+                // sinple rotation
+            }
+        }
+        if (tree.balance == 2) {
+            // left branch is unbalance
+            if (tree.right.balance == -1) {
+                // sinple rotation
+            }
+            if (tree.right.balance == 1) {
+                // double rotation
+            }
+        }
+        
+        // tree is balanced
+        return tree;
+    } 
+    
 }
