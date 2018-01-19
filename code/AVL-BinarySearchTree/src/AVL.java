@@ -22,6 +22,11 @@ public class AVL extends BinarySearchTree{
         // add node as normal to tree
         tree = super.addNode(tree, value);
         
+        
+        
+        
+        
+        
         // check height
         tree.height = this.calculateHeight(tree);
         // with the height calculate the balance of each node
@@ -87,12 +92,39 @@ public class AVL extends BinarySearchTree{
         this.calculateBalance(tree.right); 
     }
     
+    /**
+     *        /             /
+     *       z             y
+     *      / \          /   \
+     *     y   D  ->    x     z
+     *    / \          / \   / \
+     *   x   C        A   B C   D
+     *  / \
+     * A   B
+     * 
+     * @param tree unbalanced
+     * @return balanced tree
+     */
     private TreeNode leftLeftRotation(TreeNode tree) {
         TreeNode temp = tree.left;
         tree.left = temp.right;
         temp.right = tree;
         return temp;
     }
+    
+    /**
+     *      /              /             /
+     *     z              z             x
+     *    / \            / \          /   \
+     *   y   D   ->     x   D  ->    y     z
+     *  / \            / \          / \   / \
+     * A   x          y   C        A   B C   D
+     *    / \        / \
+     *   B   C      A   B
+     * 
+     * @param tree unbalanced
+     * @return balanced tree
+     */
     private TreeNode leftRightRotation(TreeNode tree) {
         TreeNode temp = tree.left.right;
         tree.left.right = temp.left;
@@ -103,12 +135,38 @@ public class AVL extends BinarySearchTree{
         
         return tree;
     }
+    
+    /**
+     *  \                 \
+     *   z                 y
+     *  / \              /   \
+     * A   y      ->    z     x
+     *    / \          / \   / \
+     *   B   x        A   B C   D
+     *      / \ 
+     *     C   D  
+     * @param tree unbalanced
+     * @return balanced tree
+     */
     private TreeNode RightRightRotation(TreeNode tree) {
         TreeNode temp = tree.right;
         tree.right = temp.left;
         temp.left = tree;
         return temp;
     }
+    
+    /**
+     *  \            \                 \
+     *   z            z                 x
+     *  / \          / \              /   \
+     * A   y    ->  A   x      ->    z     y
+     *    / \          / \          / \   / \
+     *   x   D        B   y        A   B C   D
+     *  / \              / \ 
+     * B   C            C   D  
+     * @param tree unbalanced
+     * @return balanced tree
+     */
     private TreeNode RightLeftRotation(TreeNode tree) {
         TreeNode temp = tree.right.left;
         tree.right.left = temp.left;
@@ -129,9 +187,16 @@ public class AVL extends BinarySearchTree{
         // check if we are in a node
         if (tree == null) return null;
         
+        
+        
+        
         // balance branches first
         tree.left = this.fixAVLProperty(tree.left);
         tree.right = this.fixAVLProperty(tree.right);
+        
+        
+        
+        
         
         // then balance this tree
         if (tree.balance == -2){
