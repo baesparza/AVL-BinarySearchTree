@@ -13,10 +13,11 @@ public class Application {
         TreeNode root = null;
 
         /*add this nodes*/
+        //for (int i = 0; i < 10; i++) root = avl.addNode(root, i);
         root = avl.addNode(root, 4);
-        root = avl.addNode(root, 3);
         root = avl.addNode(root, 2);
-        //root = bst.addNode(root, 1);
+        root = avl.addNode(root, 3);
+        root = bst.addNode(root, 1);
 
         // print tree
         System.out.println("Tree:\nv, h, b");

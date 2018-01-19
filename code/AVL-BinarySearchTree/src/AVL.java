@@ -21,14 +21,14 @@ public class AVL{
         // add node as normal to tree
         tree = this.BST.addNode(tree, value);
         
+        // fix avl property
+        tree = this.fixAVLProperty(tree);
+        
         /*With new node Calculate height and balance*/
         // update node height
         tree.height = this.calculateHeight(tree);
         // with the height calculate the balance of each node
         this.calculateBalance(tree);
-        
-        // fix avl property
-        tree = this.fixAVLProperty(tree);
         
         return tree; // return balanced tree
     }
@@ -103,9 +103,10 @@ public class AVL{
      * @return balanced tree
      */
     private TreeNode leftLeftRotation(TreeNode z) {
+        // never use x since might be a null node
         TreeNode y = z.left; // store y as a temp node
-        z.left = y.right; // link z.left to y.right node
-        y.right = z; // link y.right to z
+        z.left = y.right; // z.left = C
+        y.right = z;
         return y; // return y as new root of the tree
     }
     
@@ -122,15 +123,11 @@ public class AVL{
      * @param tree unbalanced
      * @return balanced tree
      */
-    private TreeNode leftRightRotation(TreeNode tree) {
-        TreeNode temp = tree.left.right;
-        tree.left.right = temp.left;
-        temp.left = tree.left;
-        tree.left = temp;
-        
-        tree = this.leftLeftRotation(tree);
-        
-        return tree;
+    private TreeNode leftRightRotation(TreeNode z) {
+        // Right rotate of x
+        z.left = this.RightRightRotation(z.left);
+        // left rotate of z
+        return this.leftLeftRotation(z);
     }
     
     /**
@@ -145,11 +142,12 @@ public class AVL{
      * @param tree unbalanced
      * @return balanced tree
      */
-    private TreeNode RightRightRotation(TreeNode tree) {
-        TreeNode temp = tree.right;
-        tree.right = temp.left;
-        temp.left = tree;
-        return temp;
+    private TreeNode RightRightRotation(TreeNode z) {
+        // never use x since might be a null node
+        TreeNode y = z.right; // store y as a temp node
+        z.right = y.left; // z.right = B
+        y.left = z;
+        return y; // return y as new root of the tree
     }
     
     /**
@@ -164,15 +162,11 @@ public class AVL{
      * @param tree unbalanced
      * @return balanced tree
      */
-    private TreeNode RightLeftRotation(TreeNode tree) {
-        TreeNode temp = tree.right.left;
-        tree.right.left = temp.left;
-        temp.right = tree.right;
-        tree.right = temp;
-        
-        tree = this.RightRightRotation(tree);
-        
-        return tree;
+    private TreeNode RightLeftRotation(TreeNode z) {
+        // left rotate y
+        z.right = this.leftLeftRotation(z.right);
+        // right rotate z
+        return this.RightRightRotation(z);
     }
     
     /**
@@ -184,12 +178,19 @@ public class AVL{
         // check if we are in a node
         if (tree == null) return null;
         
-        // store tree param to compare at the end
-        TreeNode oldTree = tree;
-        
         // balance branches first
         tree.left = this.fixAVLProperty(tree.left);
         tree.right = this.fixAVLProperty(tree.right);
+        
+        
+        
+        //recalculate balance of three if it changed
+        // update node height
+        tree.height = this.calculateHeight(tree);
+        // with the height calculate the balance of each node
+        this.calculateBalance(tree);  
+        
+        
         
         // right branch is unbalance
         if (tree.balance == -2){
@@ -208,16 +209,6 @@ public class AVL{
             // double rotation
             else if (tree.left.balance == -1)
                 tree = this.leftRightRotation(tree);
-        }
-        
-        /*tree is balanced and may have changed*/
-        //recalculate balance of three if it changed
-        if (oldTree != tree) {
-            System.out.println("Recalculating");
-            // update node height
-            tree.height = this.calculateHeight(tree);
-            // with the height calculate the balance of each node
-            this.calculateBalance(tree);  
         }
         
         return tree;
