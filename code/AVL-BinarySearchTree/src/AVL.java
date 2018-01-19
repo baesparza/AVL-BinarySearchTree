@@ -3,36 +3,34 @@
  * @author baesparza
  */
 
-
-/**
- * Methods for AVL-BST
- */
-public class AVL extends BinarySearchTree{
+public class AVL{
+    
     /**
-     * Add node to tree
-     * Fix AVL property
-     * Recalculate height of each node
-     * 
+     * simple methods from BinarySearchTree
+     */
+    private final BinarySearchTree BST = new BinarySearchTree();
+    
+    /**
+     * Add node to AVL
      * @param tree were new node will be added
      * @param value data that will be added to the tree
-     * @return tree with new node
+     * @return tree with new node BALANCED
      */
-    @Override
     public TreeNode addNode(TreeNode tree, int value) {
+        
         // add node as normal to tree
-        tree = super.addNode(tree, value);
+        tree = this.BST.addNode(tree, value);
         
-        
-        
-        
-        
-        
-        // check height
+        /*With new node Calculate height and balance*/
+        // update node height
         tree.height = this.calculateHeight(tree);
         // with the height calculate the balance of each node
         this.calculateBalance(tree);
+        
+        // fix avl property
         tree = this.fixAVLProperty(tree);
-        return tree;
+        
+        return tree; // return balanced tree
     }
     
     /**
@@ -42,10 +40,9 @@ public class AVL extends BinarySearchTree{
      * @param value data needed to be removed
      * @return tree were data was removed
      */
-    @Override
     public TreeNode removeNode(TreeNode tree, int value) {
         // remove node as normal
-        tree = super.removeNode(tree, value);
+        tree = this.BST.removeNode(tree, value);
         
         // check if we still have nodes
         if (tree == null) return tree;
@@ -105,11 +102,11 @@ public class AVL extends BinarySearchTree{
      * @param tree unbalanced
      * @return balanced tree
      */
-    private TreeNode leftLeftRotation(TreeNode tree) {
-        TreeNode temp = tree.left;
-        tree.left = temp.right;
-        temp.right = tree;
-        return temp;
+    private TreeNode leftLeftRotation(TreeNode z) {
+        TreeNode y = z.left; // store y as a temp node
+        z.left = y.right; // link z.left to y.right node
+        y.right = z; // link y.right to z
+        return y; // return y as new root of the tree
     }
     
     /**
@@ -187,39 +184,42 @@ public class AVL extends BinarySearchTree{
         // check if we are in a node
         if (tree == null) return null;
         
-        
-        
+        // store tree param to compare at the end
+        TreeNode oldTree = tree;
         
         // balance branches first
         tree.left = this.fixAVLProperty(tree.left);
         tree.right = this.fixAVLProperty(tree.right);
         
-        
-        
-        
-        
-        // then balance this tree
+        // right branch is unbalance
         if (tree.balance == -2){
-            // right branch is unbalance
-            if (tree.right.balance == 1) {
-                // double rotation
+            // double rotation
+            if (tree.right.balance == 1) 
                 tree = this.RightLeftRotation(tree);
-            } else if (tree.right.balance == -1) {
-                // sinple rotation
+            // sinple rotation
+            else if (tree.right.balance == -1)
                 tree = this.RightRightRotation(tree);
-            }
-        } else if (tree.balance == 2) {
-            // left branch is unbalance
-            if (tree.left.balance == 1) {
-                // sinple rotation
+        }
+        // left branch is unbalance
+        else if (tree.balance == 2) {
+            // sinple rotation
+            if (tree.left.balance == 1) 
                 tree = this.leftLeftRotation(tree);
-            } else if (tree.left.balance == -1) {
-                // double rotation
+            // double rotation
+            else if (tree.left.balance == -1)
                 tree = this.leftRightRotation(tree);
-            }
         }
         
-        // tree is balanced
+        /*tree is balanced and may have changed*/
+        //recalculate balance of three if it changed
+        if (oldTree != tree) {
+            System.out.println("Recalculating");
+            // update node height
+            tree.height = this.calculateHeight(tree);
+            // with the height calculate the balance of each node
+            this.calculateBalance(tree);  
+        }
+        
         return tree;
     } 
     
