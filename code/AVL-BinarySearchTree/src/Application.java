@@ -6,26 +6,22 @@
 public class Application {
 
     public static void main(String[] args) {
-        // methods to work with
-        AVL bst = new AVL();
+        
+        AVL avl = new AVL();// methods to work with AVL tree
+        BinarySearchTree bst = new BinarySearchTree();// methods to work with binary search tree
         // root of the new tree
         TreeNode root = null;
 
         /*add this nodes*/
-        root = bst.addNode(root, 7);
-        root = bst.addNode(root, 2);
-        root = bst.addNode(root, 8);
-        root = bst.addNode(root, 1);
-        root = bst.addNode(root, 4);
-        root = bst.addNode(root, 5);
-        root = bst.addNode(root, 3);
-        root = bst.addNode(root, 10);
-        root = bst.addNode(root, 9);
-        root = bst.addNode(root, 6);
+        root = avl.addNode(root, 4);
+        root = avl.addNode(root, 3);
+        root = avl.addNode(root, 2);
+        //root = bst.addNode(root, 1);
 
         // print tree
         System.out.println("Tree:\nv, h, b");
-        bst.printInOrder(root);
+        bst.traverse(root);
+        
         /*
         // remove this nodes
         root = bst.removeNode(root, 1);

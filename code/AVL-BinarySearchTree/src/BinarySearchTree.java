@@ -12,12 +12,12 @@ public class BinarySearchTree {
      * Traverse tree in order
      * @param tree tree to be printed
      */
-    public void printInOrder(TreeNode tree) {
+    public void traverse(TreeNode tree) {
         // check if we are in a node
         if (tree == null) return;
-        this.printInOrder(tree.left);
+        this.traverse(tree.left);
         System.out.println(tree.value + ", " + tree.height + ", " + tree.balance);
-        this.printInOrder(tree.right);
+        this.traverse(tree.right);
     } 
     
     /**
