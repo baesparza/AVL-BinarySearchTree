@@ -9,28 +9,26 @@ public class Application {
         
         AVL avl = new AVL();// methods to work with AVL tree
         BinarySearchTree bst = new BinarySearchTree();// methods to work with binary search tree
-        // root of the new tree
-        TreeNode root = null;
+        TreeGraph plot = new TreeGraph(); // transfor array to array to plot
+        TreeNode root = null; // root of the new tree
 
         /*add this nodes*/
-        for (int i = 1; i <= 5; i++) root = avl.addNode(root, i);
+        for (int i = 0; i <= 5; i++) root = avl.addNode(root, i);
         //root = avl.addNode(root, 3);
         //root = avl.addNode(root, 4);
         //root = avl.addNode(root, 2);
         //root = avl.addNode(root, 1);
 
-        
         // print tree
         System.out.println("Tree:\nv, h");
         bst.traverse(root);
         
-        // transfor array to array to plot
-        TreeGraph plot = new TreeGraph();
         
-        
-        plot.getData(root);
+        TreePoint[][] points = plot.getData(root);
         System.out.println("\n\nDATA\nd, v");
-        plot.print();
+        plot.printData();
+        
+        
         /*
         // remove this nodes
         root = avl.removeNode(root, 1);
