@@ -4,14 +4,15 @@
  */
 
 public class AVL{
+
+    private final BinarySearchTree BST;
+
+    public AVL() {
+        this.BST = new BinarySearchTree();
+    }
     
     /**
-     * simple methods from BinarySearchTree
-     */
-    private final BinarySearchTree BST = new BinarySearchTree();
-    
-    /**
-     * Add node to AVL
+     * Add node to AVL Tree
      * @param tree were new node will be added
      * @param value data that will be added to the tree
      * @return tree with new node BALANCED
@@ -21,14 +22,11 @@ public class AVL{
         // add node as normal to tree
         tree = this.BST.addNode(tree, value);
         
+        // update node`s height
+        tree.height = this.calculateHeight(tree);
+        
         // fix avl property
         tree = this.fixAVLProperty(tree);
-        
-        /*With new node Calculate height and balance*/
-        // update node height
-        tree.height = this.calculateHeight(tree);
-        // with the height calculate the balance of each node
-        this.calculateBalance(tree);
         
         return tree; // return balanced tree
     }
@@ -68,105 +66,85 @@ public class AVL{
     }
     
     /**
-     * Calculate balance of every node
-     * based on the height
-     * @param tree to calculate balance property
+     * Balance an unbalanced tree(z)
+     * @param tree unbalanced
+     * @return balanced tree
      */
-    public void calculateBalance(TreeNode tree) {
-        // if no node return
-        if (tree == null) return;
+    private TreeNode leftRotation(TreeNode z) {
+        /**
+         * Balance of z.right is 1 start at (1); else start at (2)
+         * (1)          (2)               (3)
+         *      /              /             /
+         *     z              z             x
+         *    / \            / \          /   \
+         *   y   D   ->     x   D  ->    y     z
+         *  / \            / \          / \   / \
+         * A   x          y   C        A   B C   D
+         *    / \        / \
+         *   B   C      A   B
+         * 
+         * z has height of at least 2, y has height of at least 1 and
+         * x has height of at least 0, so at the end x is a node
+         */
+    
+        int balance = 
+                ((z.left.left != null) ? z.left.left.height : -1) - 
+                ((z.left.right != null) ? z.left.right.height : -1);
         
-        // left.height - right.height
-        // if left is bigger result is 2 or 1
-        // if right is bigger result is -2 or -1
-        // if both are balanced result is 0
-        tree.balance = 
-                ((tree.left != null) ? tree.left.height : -1) - 
-                ((tree.right != null) ? tree.right.height : -1);
+        if (balance == 1) {
+            /*right rotate y*/
+            TreeNode y = z.left; // y fo quick acces
+            TreeNode x = y.right; // store x as a temp node
+            y.right = x.left; // y.left = B
+            x.left = y;
+            z.left = x;
+        }
+        /*left rotate z*/
+        TreeNode x = z.left; // store x as a temp node
+        z.left = x.right; // z.right = C
+        x.right = z;
+        return x; // return x as new root of the tree
+    }
+    
+    /**
+     * Balance an unbalanced tree(z)
+     * @param tree unbalanced
+     * @return balanced tree
+     */
+    private TreeNode RightRotation(TreeNode z) {
+        /**
+         * Balance of z.right is 1 start at (1); else start at (2)
+         * (1)          (2)               (3)
+         *  \            \                 \
+         *   z            z                 x
+         *  / \          / \              /   \
+         * A   y    ->  A   x      ->    z     y
+         *    / \          / \          / \   / \
+         *   x   D        B   y        A   B C   D
+         *  / \              / \ 
+         * B   C            C   D
+         * z has height of at least 2, y has height of at least 1 and
+         * x has height of at least 0, so at the end x is a node
+         */
+    
+        int balance = 
+                ((z.right.left != null) ? z.right.left.height : -1) - 
+                ((z.right.right != null) ? z.right.right.height : -1);
         
-        // visit and calculate left and right node balance recursive
-        this.calculateBalance(tree.left); 
-        this.calculateBalance(tree.right); 
-    }
-    
-    /**
-     *        /             /
-     *       z             y
-     *      / \          /   \
-     *     y   D  ->    x     z
-     *    / \          / \   / \
-     *   x   C        A   B C   D
-     *  / \
-     * A   B
-     * 
-     * @param tree unbalanced
-     * @return balanced tree
-     */
-    private TreeNode leftLeftRotation(TreeNode z) {
-        // never use x since might be a null node
-        TreeNode y = z.left; // store y as a temp node
-        z.left = y.right; // z.left = C
-        y.right = z;
-        return y; // return y as new root of the tree
-    }
-    
-    /**
-     *      /              /             /
-     *     z              z             x
-     *    / \            / \          /   \
-     *   y   D   ->     x   D  ->    y     z
-     *  / \            / \          / \   / \
-     * A   x          y   C        A   B C   D
-     *    / \        / \
-     *   B   C      A   B
-     * 
-     * @param tree unbalanced
-     * @return balanced tree
-     */
-    private TreeNode leftRightRotation(TreeNode z) {
-        // Right rotate of x
-        z.left = this.RightRightRotation(z.left);
-        // left rotate of z
-        return this.leftLeftRotation(z);
-    }
-    
-    /**
-     *  \                 \
-     *   z                 y
-     *  / \              /   \
-     * A   y      ->    z     x
-     *    / \          / \   / \
-     *   B   x        A   B C   D
-     *      / \ 
-     *     C   D  
-     * @param tree unbalanced
-     * @return balanced tree
-     */
-    private TreeNode RightRightRotation(TreeNode z) {
-        // never use x since might be a null node
-        TreeNode y = z.right; // store y as a temp node
-        z.right = y.left; // z.right = B
-        y.left = z;
-        return y; // return y as new root of the tree
-    }
-    
-    /**
-     *  \            \                 \
-     *   z            z                 x
-     *  / \          / \              /   \
-     * A   y    ->  A   x      ->    z     y
-     *    / \          / \          / \   / \
-     *   x   D        B   y        A   B C   D
-     *  / \              / \ 
-     * B   C            C   D  
-     * @param tree unbalanced
-     * @return balanced tree
-     */
-    private TreeNode RightLeftRotation(TreeNode z) {
-        // left rotate y
-        z.right = this.leftLeftRotation(z.right);
-        // right rotate z
-        return this.RightRightRotation(z);
+        if (balance == 1) {
+            /*left rotate y*/
+            TreeNode y = z.right; // y fo quick acces
+            TreeNode x = y.left; // store x as a temp node
+            y.left = x.right; // y.left = C
+            x.right = y;
+            z.right = x;
+        }
+        /*right rotate z*/
+        TreeNode x = z.right; // store x as a temp node
+        z.right = x.left; // z.right = B
+        x.left = z;
+        
+        return x; // return x as new root of the tree
     }
     
     /**
@@ -182,34 +160,25 @@ public class AVL{
         tree.left = this.fixAVLProperty(tree.left);
         tree.right = this.fixAVLProperty(tree.right);
         
+        // left.height - right.height
+        // if left is bigger result is 2 or 1
+        // if right is bigger result is -2 or -1
+        // if both are iqual result is 0
+        int balance = 
+                ((tree.left != null) ? tree.left.height : -1) - 
+                ((tree.right != null) ? tree.right.height : -1);
         
+        /*if unbalanced, balance it*/
+        if (balance == -2){
+            // right branch is unbalance
+            tree = this.RightRotation(tree);
+        } else if (balance == 2) {
+            // left branch is unbalance
+            tree = this.leftRotation(tree);
+        }
         
-        //recalculate balance of three if it changed
-        // update node height
+        // update node`s height
         tree.height = this.calculateHeight(tree);
-        // with the height calculate the balance of each node
-        this.calculateBalance(tree);  
-        
-        
-        
-        // right branch is unbalance
-        if (tree.balance == -2){
-            // double rotation
-            if (tree.right.balance == 1) 
-                tree = this.RightLeftRotation(tree);
-            // sinple rotation
-            else if (tree.right.balance == -1)
-                tree = this.RightRightRotation(tree);
-        }
-        // left branch is unbalance
-        else if (tree.balance == 2) {
-            // sinple rotation
-            if (tree.left.balance == 1) 
-                tree = this.leftLeftRotation(tree);
-            // double rotation
-            else if (tree.left.balance == -1)
-                tree = this.leftRightRotation(tree);
-        }
         
         return tree;
     } 
