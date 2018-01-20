@@ -1,9 +1,17 @@
 
+import java.util.Scanner;
+
+
 /**
  *
  * @author baesparza
  */
 public class Application {
+    
+    /**
+     * Scanner to read user input
+     */
+    public static Scanner input = new Scanner(System.in);
 
     public static void main(String[] args) {
         
@@ -11,8 +19,38 @@ public class Application {
         BinarySearchTree bst = new BinarySearchTree();// methods to work with binary search tree
         TreeGraph plot = new TreeGraph(); // transfor array to array to plot
         TreeNode root = null; // root of the new tree
+        TreePoint[][] points; // data for visualizing
 
-        /*add this nodes*/
+        /*MENU*/
+        int opc;
+        do {
+            // check valid input
+            do {
+                opc = inputMessage("Select an option\n1. Insert\n2. Delete\n0. Exit\n->");
+            } while (opc < 0 || opc > 2);
+            // menu options
+            switch(opc){
+                case 1:
+                    root = avl.addNode(root, inputMessage("Insert a number: "));
+                    break;
+                case 2:
+                    root = avl.removeNode(root, inputMessage("Insert a number: "));
+                    break;
+            }
+            // print tree
+            System.out.println("Tree:\nv, h");
+            bst.traverse(root);
+            // print plot
+            points = plot.getData(root);
+            System.out.println("Data:\nd, v");
+            plot.printData();
+        } while (opc != 0);
+        
+        
+        
+        
+        /*
+        //add this nodes
         for (int i = 0; i <= 5; i++) root = avl.addNode(root, i);
         //root = avl.addNode(root, 3);
         //root = avl.addNode(root, 4);
@@ -29,7 +67,6 @@ public class Application {
         plot.printData();
         
         
-        /*
         // remove this nodes
         root = avl.removeNode(root, 1);
         //root = avl.removeNode(root, 2);
@@ -42,6 +79,11 @@ public class Application {
         System.out.println("\nTree:");
         bst.traverse(root);
         */
+    }
+    
+    public static int inputMessage(String msg) {
+        System.out.println(msg);
+        return input.nextInt();
     }
 
 }
