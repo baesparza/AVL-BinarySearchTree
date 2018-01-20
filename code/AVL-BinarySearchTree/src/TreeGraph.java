@@ -78,7 +78,7 @@ public class TreeGraph {
             for (TreePoint data: row) {
                 System.out.println(data.data + ", " + data.valid);
             }
-            System.out.println("-----");
+            System.out.println("-");
         }
     }
 

@@ -18,17 +18,14 @@ public class AVL{
      * @return tree with new node BALANCED
      */
     public TreeNode addNode(TreeNode tree, int value) {
-        
         // add node as normal to tree
         tree = this.BST.addNode(tree, value);
-        
+
         // update node`s height
         tree.height = this.calculateHeight(tree);
-        
+
         // fix avl property
-        tree = this.fixAVLProperty(tree);
-        
-        return tree; // return balanced tree
+        return this.fixAVLProperty(tree); // return balanced tree
     }
     
     /**
@@ -59,7 +56,7 @@ public class AVL{
      * @param tree to calculate height
      * @return height of this node
      */
-    public int calculateHeight(TreeNode tree) {
+    private int calculateHeight(TreeNode tree) {
         // set height adding 1 to the longest path
         tree.height = Math.max(
                 (tree.left != null) ? this.calculateHeight(tree.left) : -1, 
@@ -67,6 +64,19 @@ public class AVL{
         ) + 1;
         
         return tree.height;
+    }
+    
+    /**
+     * Calculate the balance of a node
+     * @param tree node
+     * @return balance
+     */
+    private int getBalance(TreeNode tree) {
+        // if left is bigger result is 2 or 1 
+        // if right is bigger result is -2 or -1
+        // if both are iqual result is 0
+        return ((tree.left != null) ? tree.left.height : -1) - 
+                ((tree.right != null) ? tree.right.height : -1);
     }
     
     /**
@@ -91,9 +101,7 @@ public class AVL{
          * x has height of at least 0, so at the end x is a node
          */
     
-        int balance = 
-                ((z.left.left != null) ? z.left.left.height : -1) - 
-                ((z.left.right != null) ? z.left.right.height : -1);
+        int balance = this.getBalance(z.left);
         
         if (balance == 1) {
             /*right rotate y*/
@@ -107,6 +115,9 @@ public class AVL{
         TreeNode x = z.left; // store x as a temp node
         z.left = x.right; // z.right = C
         x.right = z;
+        
+        x.height = this.calculateHeight(x); // update node`s height
+        
         return x; // return x as new root of the tree
     }
     
@@ -131,9 +142,7 @@ public class AVL{
          * x has height of at least 0, so at the end x is a node
          */
     
-        int balance = 
-                ((z.right.left != null) ? z.right.left.height : -1) - 
-                ((z.right.right != null) ? z.right.right.height : -1);
+        int balance = this.getBalance(z.right);
         
         if (balance == 1) {
             /*left rotate y*/
@@ -147,6 +156,8 @@ public class AVL{
         TreeNode x = z.right; // store x as a temp node
         z.right = x.left; // z.right = B
         x.left = z;
+        
+        x.height = this.calculateHeight(x); // update node`s height
         
         return x; // return x as new root of the tree
     }
@@ -164,13 +175,7 @@ public class AVL{
         tree.left = this.fixAVLProperty(tree.left);
         tree.right = this.fixAVLProperty(tree.right);
         
-        // left.height - right.height
-        // if left is bigger result is 2 or 1
-        // if right is bigger result is -2 or -1
-        // if both are iqual result is 0
-        int balance = 
-                ((tree.left != null) ? tree.left.height : -1) - 
-                ((tree.right != null) ? tree.right.height : -1);
+        int balance = this.getBalance(tree); // get balance factor of this node
         
         /*if unbalanced, balance it*/
         if (balance == -2){
@@ -180,10 +185,6 @@ public class AVL{
             // left branch is unbalance
             tree = this.leftRotation(tree);
         }
-        
-        // update node`s height
-        tree.height = this.calculateHeight(tree);
-        
         return tree;
     } 
     

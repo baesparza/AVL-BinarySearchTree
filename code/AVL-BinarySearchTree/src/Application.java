@@ -22,14 +22,17 @@ public class Application {
         TreePoint[][] points; // data for visualizing
 
         /*MENU*/
+        /*
         int opc;
-        do {
+        while (true) {
             // check valid input
             do {
-                opc = inputMessage("Select an option\n1. Insert\n2. Delete\n0. Exit\n->");
+                opc = inputMessage("Select an option\n1. Insert\n2. Delete\n0. Exit\n-> ");
             } while (opc < 0 || opc > 2);
             // menu options
             switch(opc){
+                case 0:
+                    System.exit(0);
                 case 1:
                     root = avl.addNode(root, inputMessage("Insert a number: "));
                     break;
@@ -44,14 +47,12 @@ public class Application {
             points = plot.getData(root);
             System.out.println("Data:\nd, v");
             plot.printData();
-        } while (opc != 0);
+        }        
+        */
         
         
-        
-        
-        /*
         //add this nodes
-        for (int i = 0; i <= 5; i++) root = avl.addNode(root, i);
+        for (int i = 0; i <= 6; i++) root = avl.addNode(root, i);
         //root = avl.addNode(root, 3);
         //root = avl.addNode(root, 4);
         //root = avl.addNode(root, 2);
@@ -62,27 +63,22 @@ public class Application {
         bst.traverse(root);
         
         
-        TreePoint[][] points = plot.getData(root);
-        System.out.println("\n\nDATA\nd, v");
-        plot.printData();
+        //points = plot.getData(root);
+        //System.out.println("\n\nDATA\nd, v");
+        //plot.printData();
         
         
         // remove this nodes
         root = avl.removeNode(root, 1);
-        //root = avl.removeNode(root, 2);
         root = avl.removeNode(root, 3);
-        //root = avl.removeNode(root, 4);
-        //root = avl.removeNode(root, 5);
-        //root = avl.removeNode(root, 6);
-        root = avl.removeNode(root, 10);
         // print tree after nodes were removed
         System.out.println("\nTree:");
         bst.traverse(root);
-        */
+        
     }
     
     public static int inputMessage(String msg) {
-        System.out.println(msg);
+        System.out.print(msg);
         return input.nextInt();
     }
 
