@@ -45,9 +45,13 @@ public class AVL{
         // check if we still have nodes
         if (tree == null) return tree;
         
-        // check height
+        // update node`s height
         tree.height = this.calculateHeight(tree);
-        return tree;
+        
+        // fix avl property
+        tree = this.fixAVLProperty(tree);
+        
+        return tree; // return balanced tree
     }
     
     /**
