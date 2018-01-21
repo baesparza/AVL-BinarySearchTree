@@ -58,7 +58,7 @@ public class TreeGraph {
         
         // i is index of array; size number of spaces per row and duplicate each loop
         // set positions to 0
-        for (int i = 0, size = 1; i < this.data.length; i++, size += size){
+        for (int i = 0, size = 1; i < this.data.length; i++, size *= 2){
             this.data[i] = new TreePoint[size];
             this.positions[i] = 0;
         }

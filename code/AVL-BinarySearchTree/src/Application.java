@@ -52,7 +52,7 @@ public class Application {
         
         
         //add this nodes
-        for (int i = 0; i <= 10; i++) root = avl.addNode(root, i);
+        for (int i = 0; i <= 20; i++) root = avl.addNode(root, i);
         //root = avl.addNode(root, 3);
         //root = avl.addNode(root, 4);
         //root = avl.addNode(root, 2);
