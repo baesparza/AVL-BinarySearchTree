@@ -1,4 +1,13 @@
+package Application;
 
+
+import Visualization.TreeVisualizer;
+import Visualization.MyCanvas;
+import Visualization.TreeGraph;
+import Tree.TreeNode;
+import Visualization.TreePoint;
+import Tree.BinarySearchTree;
+import Tree.AVL;
 import java.util.Scanner;
 
 
@@ -18,11 +27,13 @@ public class Application {
         AVL avl = new AVL();// methods to work with AVL tree
         BinarySearchTree bst = new BinarySearchTree();// methods to work with binary search tree
         TreeGraph plot = new TreeGraph(); // transfor array to array to plot
+        MyCanvas canvas = new MyCanvas(); // initialize canvas
+        TreeVisualizer frame = new TreeVisualizer(canvas); // canvas
+        
         TreeNode root = null; // root of the new tree
         TreePoint[][] points; // data for visualizing
-
+        
         /*MENU*/
-        /*
         int opc;
         while (true) {
             // check valid input
@@ -47,39 +58,9 @@ public class Application {
             points = plot.getData(root);
             System.out.println("Data:\nd, v");
             plot.printData();
+            // Plot on canvas
+            canvas.setPoints(points);
         }        
-        */
-        
-        
-        //add this nodes
-        for (int i = 0; i <= 20; i++) root = avl.addNode(root, i);
-        //root = avl.addNode(root, 3);
-        //root = avl.addNode(root, 4);
-        //root = avl.addNode(root, 2);
-        //root = avl.addNode(root, 1);
-
-        // print tree
-        System.out.println("Tree:\nv, h");
-        bst.traverse(root);
-        
-        
-        points = plot.getData(root);
-        System.out.println("\n\nDATA\nd, v");
-        plot.printData();
-        
-        /*
-        // remove this nodes
-        root = avl.removeNode(root, 1);
-        root = avl.removeNode(root, 3);
-        root = avl.removeNode(root, 0);
-        // print tree after nodes were removed
-        System.out.println("\nTree:");
-        bst.traverse(root);
-        */
-        
-        
-        /*Plot*/
-        TreeVisualizer frame = new TreeVisualizer(points);
     }
     
     public static int inputMessage(String msg) {

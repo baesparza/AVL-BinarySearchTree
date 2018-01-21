@@ -1,45 +1,35 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Visualization;
+
+import java.awt.Canvas;
+import java.awt.Graphics;
 
 /**
  *
  * @author baesparza
  */
-import java.awt.*;
-import javax.swing.*;
-
-class TreeVisualizer extends JFrame {
-
-    private final MyCanvas canvas;
-
-    public TreeVisualizer(TreePoint[][] points) {
-        this.canvas = new MyCanvas();
-        setLayout(new BorderLayout());
-        setSize(600, 600);
-        setTitle("BST Visualizer");
-        add("Center", this.canvas);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        // center screen
-        setLocationRelativeTo(null);
-
-        setVisible(true);
-        this.canvas.setPoints(points);
-    }
-}
-
-class MyCanvas extends Canvas {
+public class MyCanvas extends Canvas {
 
     private TreePoint[][] points;
     private int size;
+    
+    public MyCanvas() {
+        this.size = 600;
+    }
 
     public void setPoints(TreePoint[][] points) {
         this.points = points;
-        this.size = 600;
     }
 
     @Override
     public void paint(Graphics g) {
         super.paint(g);
-
+        
+        if (this.points != null)
         for (int i = 0, spaces = 1; i < this.points.length; i++, spaces *= 2) {
             for (int j = 0; j < this.points[i].length; j++) {
                 if (this.points[i][j].valid) {
@@ -50,7 +40,7 @@ class MyCanvas extends Canvas {
                 }
             }
         }
-        g.drawString("H", 0,10);
     }
 
 }
+

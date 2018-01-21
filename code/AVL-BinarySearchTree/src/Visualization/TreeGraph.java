@@ -1,3 +1,8 @@
+package Visualization;
+
+
+import Tree.TreeNode;
+
 /**
  *
  * @author baesparza
