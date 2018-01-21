@@ -25,7 +25,12 @@ public class AVL{
         tree.height = this.calculateHeight(tree);
 
         // fix avl property
-        return this.fixAVLProperty(tree); // return balanced tree
+        tree = this.fixAVLProperty(tree); // return balanced tree
+        
+        // update node`s height
+        tree.height = this.calculateHeight(tree);
+        
+        return tree;
     }
     
     /**
@@ -46,9 +51,12 @@ public class AVL{
         tree.height = this.calculateHeight(tree);
         
         // fix avl property
-        tree = this.fixAVLProperty(tree);
+        tree = this.fixAVLProperty(tree); // return balanced tree
         
-        return tree; // return balanced tree
+        // update node`s height
+        tree.height = this.calculateHeight(tree);
+        
+        return tree;
     }
     
     /**

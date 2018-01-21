@@ -52,7 +52,7 @@ public class Application {
         
         
         //add this nodes
-        for (int i = 0; i <= 6; i++) root = avl.addNode(root, i);
+        for (int i = 0; i <= 10; i++) root = avl.addNode(root, i);
         //root = avl.addNode(root, 3);
         //root = avl.addNode(root, 4);
         //root = avl.addNode(root, 2);
@@ -63,18 +63,23 @@ public class Application {
         bst.traverse(root);
         
         
-        //points = plot.getData(root);
-        //System.out.println("\n\nDATA\nd, v");
-        //plot.printData();
+        points = plot.getData(root);
+        System.out.println("\n\nDATA\nd, v");
+        plot.printData();
         
-        
+        /*
         // remove this nodes
         root = avl.removeNode(root, 1);
         root = avl.removeNode(root, 3);
+        root = avl.removeNode(root, 0);
         // print tree after nodes were removed
         System.out.println("\nTree:");
         bst.traverse(root);
+        */
         
+        
+        /*Plot*/
+        TreeVisualizer frame = new TreeVisualizer(points);
     }
     
     public static int inputMessage(String msg) {
