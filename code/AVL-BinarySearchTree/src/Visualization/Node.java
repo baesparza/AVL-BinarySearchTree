@@ -1,5 +1,7 @@
 package Visualization;
 
+import Tree.TreeNode;
+
 /**
  *
  * @author baesparza
@@ -8,23 +10,28 @@ package Visualization;
 /**
  * Struct node used for plotting a Tree
  */
-public class TreePoint {
-    public int data;
+public class Node {
+    public TreeNode node;
     public boolean valid;
+    public int x, y, totalSize;
+    
+    
     /**
      * COnstructor when point exists
      * @param data 
      */
-    public TreePoint(int data) {
-        this.data = data;
+    public Node(TreeNode data, int totalSize ) {
+        this.node = data;
         this.valid = true;
+        this.totalSize = totalSize;
     }
     /**
      * COnstructor when point doesn't exists
      * @param valid 
      */
-    public TreePoint(boolean valid) {
+    public Node(boolean valid) {
         this.valid = valid;
+        this.node = null;
     }
 }
 
