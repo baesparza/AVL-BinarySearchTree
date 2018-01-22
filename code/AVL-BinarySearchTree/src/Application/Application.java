@@ -1,11 +1,11 @@
 package Application;
 
 
-import Visualization.TreeVisualizer;
-import Visualization.MyCanvas;
-import Visualization.TreeGraph;
+import Visualization.Visualizer;
+import Visualization.TreeCanvas;
+import Visualization.GraphData;
 import Tree.TreeNode;
-import Visualization.TreePoint;
+import Visualization.Node;
 import Tree.BinarySearchTree;
 import Tree.AVL;
 import java.util.Scanner;
@@ -26,12 +26,9 @@ public class Application {
         
         AVL avl = new AVL();// methods to work with AVL tree
         BinarySearchTree bst = new BinarySearchTree();// methods to work with binary search tree
-        TreeGraph plot = new TreeGraph(); // transfor array to array to plot
-        MyCanvas canvas = new MyCanvas(); // initialize canvas
-        TreeVisualizer frame = new TreeVisualizer(canvas); // canvas
+        Visualizer frame = new Visualizer(600); // window
         
         TreeNode root = null; // root of the new tree
-        TreePoint[][] points; // data for visualizing
         
         /*MENU*/
         int opc;
@@ -52,14 +49,8 @@ public class Application {
                     break;
             }
             // print tree
-            System.out.println("Tree:\nv, h");
+            System.out.println("\tTree:\n\tv, h");
             bst.traverse(root);
-            // print plot
-            points = plot.getData(root);
-            System.out.println("Data:\nd, v");
-            plot.printData();
-            // Plot on canvas
-            canvas.setPoints(points);
         }        
     }
     

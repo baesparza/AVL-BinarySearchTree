@@ -113,7 +113,7 @@ public class AVL{
     
         int balance = this.getBalance(z.left);
         
-        if (balance == 1) {
+        if (balance == -1) {
             /*right rotate y*/
             TreeNode y = z.left; // y fo quick acces
             TreeNode x = y.right; // store x as a temp node
