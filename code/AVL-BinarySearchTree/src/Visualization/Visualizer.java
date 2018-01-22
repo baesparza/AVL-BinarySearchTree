@@ -5,6 +5,7 @@ package Visualization;
  *
  * @author baesparza
  */
+import Tree.TreeNode;
 import java.awt.*;
 import javax.swing.*;
 
@@ -24,6 +25,11 @@ public class Visualizer extends JFrame {
         setLocationRelativeTo(null);
 
         setVisible(true);
+    }
+    
+    public void repaintTree(TreeNode tree) {
+        this.canvas.graphData.setData(tree);
+        this.canvas.repaint();
     }
 
 }

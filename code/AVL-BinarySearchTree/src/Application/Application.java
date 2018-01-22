@@ -1,35 +1,30 @@
 package Application;
 
-
 import Visualization.Visualizer;
-import Visualization.TreeCanvas;
-import Visualization.GraphData;
 import Tree.TreeNode;
-import Visualization.Node;
 import Tree.BinarySearchTree;
 import Tree.AVL;
 import java.util.Scanner;
-
 
 /**
  *
  * @author baesparza
  */
 public class Application {
-    
+
     /**
      * Scanner to read user input
      */
     public static Scanner input = new Scanner(System.in);
 
     public static void main(String[] args) {
-        
+
         AVL avl = new AVL();// methods to work with AVL tree
         BinarySearchTree bst = new BinarySearchTree();// methods to work with binary search tree
         Visualizer frame = new Visualizer(600); // window
-        
+
         TreeNode root = null; // root of the new tree
-        
+
         /*MENU*/
         int opc;
         while (true) {
@@ -38,7 +33,7 @@ public class Application {
                 opc = inputMessage("Select an option\n1. Insert\n2. Delete\n0. Exit\n-> ");
             } while (opc < 0 || opc > 2);
             // menu options
-            switch(opc){
+            switch (opc) {
                 case 0:
                     System.exit(0);
                 case 1:
@@ -51,9 +46,10 @@ public class Application {
             // print tree
             System.out.println("\tTree:\n\tv, h");
             bst.traverse(root);
-        }        
+            frame.repaintTree(root);
+        }
     }
-    
+
     public static int inputMessage(String msg) {
         System.out.print(msg);
         return input.nextInt();

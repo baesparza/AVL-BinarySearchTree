@@ -17,32 +17,33 @@ public class TreeCanvas extends Canvas {
     public TreeCanvas(int size) {
         this.graphData = new GraphData(size);
         this.size = size;
+        
+        /*
+        AVL avl = new AVL();
+        TreeNode root = null;
+        for (int i = 0; i < 20; i++) {
+            root = avl.addNode(root, i);
+        }*/
+        /*Initialize data*/
+        this.graphData.setData(null);
+        // this.graphData.printData();
     }
 
     @Override
     public void paint(Graphics g) {
         super.paint(g);
-
-        AVL avl = new AVL();
-        TreeNode root = null;
-        for (int i = 0; i < 20; i++) {
-            root = avl.addNode(root, i);
-        }
-        this.graphData.setData(root);
-        // this.graphData.printData();
-
-        for (int i = 0; i < this.graphData.data.length; i++) {
-            for (int j = 0; j < this.graphData.data[i].length; j++) {
-                if (this.graphData.data[i][j].valid) {
-                    g.drawString(String.valueOf(this.graphData.data[i][j].node.value), // node
-                            this.graphData.data[i][j].x, // width
-                            this.graphData.data[i][j].y // height
+        /*draw nodes*/
+        for (Node[] row : this.graphData.data) {
+            for (Node node : row) {
+                if (node.valid) {
+                    g.drawString(String.valueOf(node.node.value), // node
+                            node.x, // x
+                            node.y // y
                     );
-                    g.drawOval(
-                            this.graphData.data[i][j].x - 15, // width
-                            this.graphData.data[i][j].y - 15, // height
-                            30, 30
-                    );
+                    /*g.drawOval(node.x - 15, // x
+                            node.y - 15, // y
+                            30, 30 // height and width of circle
+                    );*/
                 }
             }
         }
