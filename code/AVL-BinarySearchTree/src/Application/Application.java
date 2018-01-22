@@ -30,22 +30,24 @@ public class Application {
         while (true) {
             // check valid input
             do {
-                opc = inputMessage("Select an option\n1. Insert\n2. Delete\n0. Exit\n-> ");
-            } while (opc < 0 || opc > 2);
+                opc = inputMessage("Select an option\n1. Insert\n2. Delete\n3. Print\n0. Exit\n-> ");
+            } while (opc < 0 || opc > 3);
             // menu options
             switch (opc) {
                 case 0:
                     System.exit(0);
-                case 1:
+                case 1: // add node
                     root = avl.addNode(root, inputMessage("Insert a number: "));
                     break;
-                case 2:
+                case 2: // remove node
                     root = avl.removeNode(root, inputMessage("Insert a number: "));
                     break;
+                case 3: // print tree
+                    System.out.println("\tTree:\n\tv, h");
+                    bst.traverse(root);
+                    break;
             }
-            // print tree
-            System.out.println("\tTree:\n\tv, h");
-            bst.traverse(root);
+            // update frame
             frame.repaintTree(root);
         }
     }
