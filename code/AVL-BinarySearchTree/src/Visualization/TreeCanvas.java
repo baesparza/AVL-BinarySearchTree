@@ -1,7 +1,5 @@
 package Visualization;
 
-import Tree.AVL;
-import Tree.TreeNode;
 import java.awt.Canvas;
 import java.awt.Graphics;
 
@@ -12,23 +10,22 @@ import java.awt.Graphics;
 public class TreeCanvas extends Canvas {
 
     public GraphData graphData; // stored graphData
-    final int size;
 
+    /**
+     * Initialize graphData
+     * @param size of the canvas
+     */
     public TreeCanvas(int size) {
         this.graphData = new GraphData(size);
-        this.size = size;
-        
-        /*
-        AVL avl = new AVL();
-        TreeNode root = null;
-        for (int i = 0; i < 20; i++) {
-            root = avl.addNode(root, i);
-        }*/
+
         /*Initialize data*/
         this.graphData.setData(null);
-        // this.graphData.printData();
     }
 
+    /**
+     * Paint tree
+     * @param g 
+     */
     @Override
     public void paint(Graphics g) {
         super.paint(g);
@@ -40,10 +37,10 @@ public class TreeCanvas extends Canvas {
                             node.x, // x
                             node.y // y
                     );
-                    /*g.drawOval(node.x - 15, // x
+                    g.drawOval(node.x - 15, // x
                             node.y - 15, // y
                             30, 30 // height and width of circle
-                    );*/
+                    );
                 }
             }
         }

@@ -10,7 +10,7 @@ import java.awt.*;
 import javax.swing.*;
 
 public class Visualizer extends JFrame {
-    
+
     public TreeCanvas canvas;
 
     public Visualizer(int size) {
@@ -26,10 +26,15 @@ public class Visualizer extends JFrame {
 
         setVisible(true);
     }
-    
+
+    /**
+     * Repaint canvas with new data
+     *
+     * @param tree new data to update
+     */
     public void repaintTree(TreeNode tree) {
-        this.canvas.graphData.setData(tree);
-        this.canvas.repaint();
+        this.canvas.graphData.setData(tree); // set new data
+        this.canvas.repaint(); // repaint
     }
 
 }
