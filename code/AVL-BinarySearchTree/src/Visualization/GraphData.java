@@ -48,8 +48,8 @@ public class GraphData {
         // push this node node
         this.data[depth][this.positions[depth]] = new Node(
                 tree,
-                this.heightSeparation * (depth+ 1), // x
-                ((this.size / this.items[depth]) / 2) + (this.size / this.items[depth] * this.positions[depth]) // y
+                ((this.size / this.items[depth]) / 2) + (this.size / this.items[depth] * this.positions[depth]), // x
+                this.heightSeparation * (depth+ 1) // y
         );
         this.positions[depth]++; // increment index's
         // push branches node
