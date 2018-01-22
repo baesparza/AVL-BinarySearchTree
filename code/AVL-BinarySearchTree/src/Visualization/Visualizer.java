@@ -1,21 +1,23 @@
 package Visualization;
 
-
 /**
+ * Class to manage frame
  *
  * @author baesparza
  */
 import java.awt.*;
 import javax.swing.*;
 
-public class TreeVisualizer extends JFrame {
+public class Visualizer extends JFrame {
+    
+    public TreeCanvas canvas;
 
-    public TreeVisualizer(MyCanvas canvas) {
-        canvas = new MyCanvas();
+    public Visualizer(int size) {
+        this.canvas = new TreeCanvas(size);
         setLayout(new BorderLayout());
-        setSize(600, 600);
-        setTitle("BST Visualizer");
-        add("Center", canvas);
+        setSize(size, size);
+        setTitle("AVL Tree Visualizer");
+        add("Center", this.canvas);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // center screen
@@ -23,5 +25,5 @@ public class TreeVisualizer extends JFrame {
 
         setVisible(true);
     }
-    
+
 }

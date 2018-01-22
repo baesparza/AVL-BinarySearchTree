@@ -18,7 +18,7 @@ public class BinarySearchTree {
         // check if we are in a node
         if (tree == null) return;
         this.traverse(tree.left);
-        System.out.println(tree.value + ", " + tree.height);
+        System.out.println("\t" + tree.value + ", " + tree.height);
         this.traverse(tree.right);
     } 
     
