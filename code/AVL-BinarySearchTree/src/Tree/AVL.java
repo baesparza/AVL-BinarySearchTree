@@ -90,36 +90,24 @@ public class AVL {
             tree.left = this.removeNode(tree.left, value);
         } else if (value > tree.value) {
             tree.right = this.removeNode(tree.right, value);
-        } else if (tree.value == value) {
-            /*check if we are in a leaf*/
-            if (tree.right == null && tree.left == null) {
-                return null;
-            }
+        } else {
+            /*node with only one child or no child*/
+            if (tree.right == null || tree.left == null) {
+                TreeNode temp = (tree.left == null) ? tree.right : tree.left;
 
-            /*Search node to replace this*/
-            TreeNode current = null; // iterator to search replacement
-            if (tree.left != null) {
-                // search max value in left branch
-                current = tree.left;
-                while (current.right != null) // stop before null node
-                {
-                    current = current.right;
-                }
-                /*change values*/
-                tree.value = current.value;
-                tree.left = this.removeNode(tree.left, tree.value);
+                // No child case -> tree to be returned null
+                // One child case -> Copy the contents of the non-empty child
+                tree = (temp == null) ? null : temp;
             } else {
-                // search min value in right branch
-                current = tree.right;
-                while (current.left != null) // stop before null node
-                {
-                    current = current.left;
-                }
-                /*change values*/
-                tree.value = current.value;
-                tree.right = this.removeNode(tree.right, tree.value);
+                // node has 2 children, search min value in left subtree
+                TreeNode temp = minValueNode(tree.right);
+
+                // copy temp tree value
+                tree.value = temp.value;
+
+                // remove repeated node
+                tree.right = this.removeNode(tree.right, temp.value);
             }
-            return tree;
         }
 
         // check if we are in a node
@@ -134,20 +122,20 @@ public class AVL {
         int balance = this.getBalance(tree); // get balance factor of this node
 
         // if tree is unbalanced, there are 4 cases
-        if (balance == -2 && this.getBalance(tree.right) == -1) {
+        if (balance > -1 && this.getBalance(tree.right) < 0) {
             return this.rightRotation(tree);
         }
         // left left rotation
-        if (balance == 2 && this.getBalance(tree.left) == 1) {
+        if (balance < 1 && this.getBalance(tree.left) > 0) {
             return leftRotation(tree);
         }
         // right left rotation
-        if (balance == -2 && this.getBalance(tree.right) == 1) {
+        if (balance < -1 && this.getBalance(tree.right) > 0) {
             tree.right = leftRotation(tree.right);
             return rightRotation(tree);
         }
         // left right rotation
-        if (balance == 2 && this.getBalance(tree.left) == -1) {
+        if (balance > 1 && this.getBalance(tree.left) > 0) {
             tree.left = rightRotation(tree.left);
             return leftRotation(tree);
         }
@@ -240,5 +228,22 @@ public class AVL {
 
         // return y as new tree
         return y;
+    }
+
+    /**
+     * Search node to replace
+     *
+     * @param node
+     * @return node
+     */
+    private TreeNode minValueNode(TreeNode node) {
+        TreeNode current = node;
+
+        /* loop down to find the leftmost leaf */
+        while (current.left != null) {
+            current = current.left;
+        }
+
+        return current;
     }
 }
