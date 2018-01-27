@@ -80,24 +80,79 @@ public class AVL {
      * @return tree were data was removed
      */
     public TreeNode removeNode(TreeNode tree, int value) {
-        /*
-        // remove node as normal
-        tree = this.BST.removeNode(tree, value);
-
-        // check if we still have nodes
+        // check if we are in a node
         if (tree == null) {
+            return null;
+        }
+
+        // remove node with bst remove method
+        if (value < tree.value) {
+            tree.left = this.removeNode(tree.left, value);
+        } else if (value > tree.value) {
+            tree.right = this.removeNode(tree.right, value);
+        } else if (tree.value == value) {
+            /*check if we are in a leaf*/
+            if (tree.right == null && tree.left == null) {
+                return null;
+            }
+
+            /*Search node to replace this*/
+            TreeNode current = null; // iterator to search replacement
+            if (tree.left != null) {
+                // search max value in left branch
+                current = tree.left;
+                while (current.right != null) // stop before null node
+                {
+                    current = current.right;
+                }
+                /*change values*/
+                tree.value = current.value;
+                tree.left = this.removeNode(tree.left, tree.value);
+            } else {
+                // search min value in right branch
+                current = tree.right;
+                while (current.left != null) // stop before null node
+                {
+                    current = current.left;
+                }
+                /*change values*/
+                tree.value = current.value;
+                tree.right = this.removeNode(tree.right, tree.value);
+            }
             return tree;
         }
 
-        // update node`s height
-        tree.height = this.calculateHeight(tree);
+        // check if we are in a node
+        if (tree == null) {
+            return null;
+        }
+
+        // update height of this node
+        tree.height = max(this.getHeight(tree.left), this.getHeight(tree.right)) + 1;
 
         // fix avl property
-        tree = this.fixAVLProperty(tree); // return balanced tree
+        int balance = this.getBalance(tree); // get balance factor of this node
 
-        // update node`s height
-        tree.height = this.calculateHeight(tree);
-         */
+        // if tree is unbalanced, there are 4 cases
+        if (balance == -2 && this.getBalance(tree.right) == -1) {
+            return this.rightRotation(tree);
+        }
+        // left left rotation
+        if (balance == 2 && this.getBalance(tree.left) == 1) {
+            return leftRotation(tree);
+        }
+        // right left rotation
+        if (balance == -2 && this.getBalance(tree.right) == 1) {
+            tree.right = leftRotation(tree.right);
+            return rightRotation(tree);
+        }
+        // left right rotation
+        if (balance == 2 && this.getBalance(tree.left) == -1) {
+            tree.left = rightRotation(tree.left);
+            return leftRotation(tree);
+        }
+
+        // return balanced tree
         return tree;
     }
 
