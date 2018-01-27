@@ -17,6 +17,7 @@ public class TreeNode {
      */
     public TreeNode(int value) {
         this.value = value;
+        this.height = 0;
         this.left = this.right = null;
     }
 }

@@ -2,7 +2,6 @@ package Application;
 
 import Visualization.Visualizer;
 import Tree.TreeNode;
-import Tree.BinarySearchTree;
 import Tree.AVL;
 import java.util.Scanner;
 
@@ -20,7 +19,6 @@ public class Application {
     public static void main(String[] args) {
 
         AVL avl = new AVL();// methods to work with AVL tree
-        BinarySearchTree bst = new BinarySearchTree();// methods to work with binary search tree
         Visualizer frame = new Visualizer(600); // window
 
         TreeNode root = null; // root of the new tree
@@ -44,7 +42,7 @@ public class Application {
                     break;
                 case 3: // print tree
                     System.out.println("\tTree:\n\tv, h");
-                    bst.traverse(root);
+                    avl.traverse(root);
                     break;
             }
             // update frame

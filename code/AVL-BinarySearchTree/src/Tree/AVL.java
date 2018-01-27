@@ -1,201 +1,189 @@
 package Tree;
 
- /**
+/**
  *
  * @author baesparza
  */
+public class AVL {
 
-public class AVL{
-
-    private final BinarySearchTree BST;
-
-    public AVL() {
-        this.BST = new BinarySearchTree();
+    /**
+     * Traverse tree in order
+     *
+     * @param tree tree to be printed
+     */
+    public void traverse(TreeNode tree) {
+        // check if we are in a node
+        if (tree == null) {
+            return;
+        }
+        this.traverse(tree.left);
+        System.out.println("\t" + tree.value + ", " + tree.height);
+        this.traverse(tree.right);
     }
-    
+
     /**
      * Add node to AVL Tree
+     *
      * @param tree were new node will be added
      * @param value data that will be added to the tree
      * @return tree with new node BALANCED
      */
     public TreeNode addNode(TreeNode tree, int value) {
-        // add node as normal to tree
-        tree = this.BST.addNode(tree, value);
+        // check if we hae a node
+        if (tree == null) {
+            return new TreeNode(value);
+        }
 
-        // update node`s height
-        tree.height = this.calculateHeight(tree);
+        // insert node recursively
+        if (tree.value == value) {
+            return tree;
+        } else if (value < tree.value) {
+            tree.left = this.addNode(tree.left, value);
+        } else if (value > tree.value) {
+            tree.right = this.addNode(tree.right, value);
+        }
+
+        // update height of this node
+        tree.height = max(this.getHeight(tree.left), this.getHeight(tree.right)) + 1;
 
         // fix avl property
-        tree = this.fixAVLProperty(tree); // return balanced tree
-        
-        // update node`s height
-        tree.height = this.calculateHeight(tree);
-        
+        int balance = this.getBalance(tree); // get balance factor of this node
+
+        // if tree is unbalanced, there are 4 cases
+        if (balance == -2 && value > tree.right.value) {
+            return this.rightRotation(tree);
+        }
+        // left left rotation
+        if (balance == 2 && value < tree.left.value) {
+            return leftRotation(tree);
+        }
+        // right left rotation
+        if (balance == -2 && value < tree.right.value) {
+            tree.right = leftRotation(tree.right);
+            return rightRotation(tree);
+        }
+        // left right rotation
+        if (balance == 2 && value > tree.left.value) {
+            tree.left = rightRotation(tree.left);
+            return leftRotation(tree);
+        }
+
+        // return balanced tree
         return tree;
     }
-    
+
     /**
      * Remove node from tree
-     * 
+     *
      * @param tree were node might be to be removed
      * @param value data needed to be removed
      * @return tree were data was removed
      */
     public TreeNode removeNode(TreeNode tree, int value) {
+        /*
         // remove node as normal
         tree = this.BST.removeNode(tree, value);
-        
+
         // check if we still have nodes
-        if (tree == null) return tree;
-        
+        if (tree == null) {
+            return tree;
+        }
+
         // update node`s height
         tree.height = this.calculateHeight(tree);
-        
+
         // fix avl property
         tree = this.fixAVLProperty(tree); // return balanced tree
-        
+
         // update node`s height
         tree.height = this.calculateHeight(tree);
-        
+         */
         return tree;
     }
-    
+
     /**
-     * Calculate longest path to a leaf
+     * basic function to get max of two numbers
+     *
+     * @param a first number
+     * @param b second number
+     * @return max of both numbers
+     */
+    private int max(int a, int b) {
+        return (a > b) ? a : b;
+    }
+
+    /**
+     * Calculate height of a node
+     *
      * @param tree to calculate height
      * @return height of this node
      */
-    private int calculateHeight(TreeNode tree) {
-        // set height adding 1 to the longest path
-        tree.height = Math.max(
-                (tree.left != null) ? this.calculateHeight(tree.left) : -1, 
-                (tree.right != null) ? this.calculateHeight(tree.right) : -1
-        ) + 1;
-        
-        return tree.height;
+    private int getHeight(TreeNode tree) {
+        return (tree != null) ? tree.height : -1;
     }
-    
+
     /**
      * Calculate the balance of a node
+     *
      * @param tree node
      * @return balance
      */
     private int getBalance(TreeNode tree) {
-        // if left is bigger result is 2 or 1 
-        // if right is bigger result is -2 or -1
-        // if both are iqual result is 0
-        return ((tree.left != null) ? tree.left.height : -1) - 
-                ((tree.right != null) ? tree.right.height : -1);
+        return (tree != null) ? this.getHeight(tree.left) - this.getHeight(tree.right) : 0;
     }
-    
+
     /**
      * Balance an unbalanced tree(z)
+     *
      * @param tree unbalanced
      * @return balanced tree
      */
-    private TreeNode leftRotation(TreeNode z) {
-        /**
-         * Balance of z.right is 1 start at (1); else start at (2)
-         * (1)          (2)               (3)
-         *      /              /             /
-         *     z              z             x
-         *    / \            / \          /   \
-         *   y   D   ->     x   D  ->    y     z
-         *  / \            / \          / \   / \
-         * A   x          y   C        A   B C   D
-         *    / \        / \
-         *   B   C      A   B
-         * 
-         * z has height of at least 2, y has height of at least 1 and
-         * x has height of at least 0, so at the end x is a node
-         */
-    
-        int balance = this.getBalance(z.left);
-        
-        if (balance == -1) {
-            /*right rotate y*/
-            TreeNode y = z.left; // y fo quick acces
-            TreeNode x = y.right; // store x as a temp node
-            y.right = x.left; // y.left = B
-            x.left = y;
-            z.left = x;
-        }
-        /*left rotate z*/
-        TreeNode x = z.left; // store x as a temp node
-        z.left = x.right; // z.right = C
-        x.right = z;
-        
-        x.height = this.calculateHeight(x); // update node`s height
-        
-        return x; // return x as new root of the tree
+    private TreeNode leftRotation(TreeNode x) {
+        //       /          /
+        //      x          y
+        //     / \        / \
+        //    y   C  ->  A   x
+        //   / \            / \
+        //  A   B          B   C
+        TreeNode y = x.left;
+
+        // rotate
+        x.left = y.right;
+        y.right = x;
+
+        // update heights
+        x.height = max(this.getHeight(x.left), this.getHeight(x.right)) + 1;
+        y.height = max(this.getHeight(y.left), this.getHeight(y.right)) + 1;
+
+        // return y as new tree
+        return y;
     }
-    
+
     /**
-     * Balance an unbalanced tree(z)
+     * Right rotate of x
+     *
      * @param tree unbalanced
      * @return balanced tree
      */
-    private TreeNode RightRotation(TreeNode z) {
-        /**
-         * Balance of z.right is 1 start at (1); else start at (2)
-         * (1)          (2)               (3)
-         *  \            \                 \
-         *   z            z                 x
-         *  / \          / \              /   \
-         * A   y    ->  A   x      ->    z     y
-         *    / \          / \          / \   / \
-         *   x   D        B   y        A   B C   D
-         *  / \              / \ 
-         * B   C            C   D
-         * z has height of at least 2, y has height of at least 1 and
-         * x has height of at least 0, so at the end x is a node
-         */
-    
-        int balance = this.getBalance(z.right);
-        
-        if (balance == 1) {
-            /*left rotate y*/
-            TreeNode y = z.right; // y fo quick acces
-            TreeNode x = y.left; // store x as a temp node
-            y.left = x.right; // y.left = C
-            x.right = y;
-            z.right = x;
-        }
-        /*right rotate z*/
-        TreeNode x = z.right; // store x as a temp node
-        z.right = x.left; // z.right = B
-        x.left = z;
-        
-        x.height = this.calculateHeight(x); // update node`s height
-        
-        return x; // return x as new root of the tree
+    private TreeNode rightRotation(TreeNode x) {
+        //   \              \
+        //    x              y
+        //   / \            / \
+        //  A   y    ->    x   C
+        //     / \        / \
+        //    B   C      A   B
+
+        TreeNode y = x.right;
+
+        // rotate
+        x.right = y.left;
+        y.left = x;
+
+        // update heights
+        x.height = max(this.getHeight(x.left), this.getHeight(x.right)) + 1;
+        y.height = max(this.getHeight(y.left), this.getHeight(y.right)) + 1;
+
+        // return y as new tree
+        return y;
     }
-    
-    /**
-     * Check if each node is balanced
-     * @param tree to be balanced
-     * @return balanced tree
-     */
-    private TreeNode fixAVLProperty(TreeNode tree) {
-        // check if we are in a node
-        if (tree == null) return null;
-        
-        // balance branches first
-        tree.left = this.fixAVLProperty(tree.left);
-        tree.right = this.fixAVLProperty(tree.right);
-        
-        int balance = this.getBalance(tree); // get balance factor of this node
-        
-        /*if unbalanced, balance it*/
-        if (balance == -2){
-            // right branch is unbalance
-            tree = this.RightRotation(tree);
-        } else if (balance == 2) {
-            // left branch is unbalance
-            tree = this.leftRotation(tree);
-        }
-        return tree;
-    } 
-    
 }
