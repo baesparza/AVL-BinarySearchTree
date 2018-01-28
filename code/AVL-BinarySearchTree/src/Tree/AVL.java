@@ -122,22 +122,22 @@ public class AVL {
         int balance = this.getBalance(tree); // get balance factor of this node
 
         // if tree is unbalanced, there are 4 cases
-        if (balance > -1 && this.getBalance(tree.right) < 0) {
-            return this.rightRotation(tree);
+        if (balance > 1 && this.getBalance(tree.left) >= 0) {
+            return this.leftRotation(tree);
         }
         // left left rotation
-        if (balance < 1 && this.getBalance(tree.left) > 0) {
-            return leftRotation(tree);
+        if (balance > 1 && this.getBalance(tree.left) < 0) {
+            tree.left = this.rightRotation(tree.left);
+            return this.leftRotation(tree);
         }
         // right left rotation
-        if (balance < -1 && this.getBalance(tree.right) > 0) {
-            tree.right = leftRotation(tree.right);
-            return rightRotation(tree);
+        if (balance < -1 && this.getBalance(tree.right) <= 0) {
+            return this.rightRotation(tree);
         }
         // left right rotation
-        if (balance > 1 && this.getBalance(tree.left) > 0) {
-            tree.left = rightRotation(tree.left);
-            return leftRotation(tree);
+        if (balance < -1 && this.getBalance(tree.right) > 0) {
+            tree.right = this.leftRotation(tree.right);
+            return this.rightRotation(tree);
         }
 
         // return balanced tree
