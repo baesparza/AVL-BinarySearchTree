@@ -43,10 +43,7 @@ public class TreeCanvas extends Canvas {
         if (tree == null) {
             return;
         }
-        g.drawString(String.valueOf(tree.value), // node
-                tree.pos_x, // x
-                tree.pos_y // y
-        );
+        g.drawString(String.valueOf(tree.value), tree.pos_x, tree.pos_y); // v, x, y
         this.drawNodes(tree.left, g);
         this.drawNodes(tree.right, g);
     }
@@ -55,17 +52,14 @@ public class TreeCanvas extends Canvas {
         if (tree == null) {
             return;
         }
+
         this.drawLines(tree.left, g);
         this.drawLines(tree.right, g);
+
         if (tree.parent == null) {
             return;
         }
-        g.drawLine(
-                tree.pos_x, // start x
-                tree.pos_y, // start y
-                tree.parent.pos_x, // end x
-                tree.parent.pos_y // end y
-        );
+        g.drawLine(tree.pos_x, tree.pos_y, tree.parent.pos_x, tree.parent.pos_y); // sx, sy, ex, ey
     }
 
 }

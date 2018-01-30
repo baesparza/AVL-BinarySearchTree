@@ -19,7 +19,7 @@ public class Application {
     public static void main(String[] args) {
 
         AVL avl = new AVL();// methods to work with AVL tree
-        Visualizer frame = new Visualizer(600); // window
+        Visualizer frame = new Visualizer(800); // window
 
         TreeNode root = null; // root of the new tree
 

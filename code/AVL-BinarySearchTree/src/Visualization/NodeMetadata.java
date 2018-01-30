@@ -23,7 +23,8 @@ public class NodeMetadata {
     }
 
     /**
-     * Update parents of nodes by linking, depth of a node
+     * Update parents of nodes by linking, depth of a node and position of node
+     * x and y
      *
      * @param current node were parent will be linked
      * @param parent parent of current node
@@ -40,6 +41,7 @@ public class NodeMetadata {
             }
             return;
         }
+        // set parent and depth
         current.parent = parent;
         current.depth = depth;
 
@@ -50,7 +52,6 @@ public class NodeMetadata {
 
         this.updateMetadata(current.left, current, depth + 1);
         this.updateMetadata(current.right, current, depth + 1);
-
     }
 
     /**
