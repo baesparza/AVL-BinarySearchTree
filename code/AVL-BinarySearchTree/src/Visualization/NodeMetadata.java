@@ -74,8 +74,6 @@ public class NodeMetadata {
             this.positions[i] = 0; // set positions to 0
             this.items[i] = size;
         }
-        //for (int i : this.positions) System.out.println("pos: " + i);
-        //for (int i : this.items) System.out.println("it: " + i);
         this.updateMetadata(tree, null, 0);
 
     }

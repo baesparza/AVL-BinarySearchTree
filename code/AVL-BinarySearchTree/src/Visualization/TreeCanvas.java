@@ -33,44 +33,10 @@ public class TreeCanvas extends Canvas {
     @Override
     public void paint(Graphics g) {
         super.paint(g);
-        
-        this.drawNodes(this.tree, g);
-        
-        /*draw nodes*/
- /*
-        for (Node[] row : this.graphData.data) {
-            for (Node node : row) {
-                if (node.valid) {
-                    g.drawString(String.valueOf(node.node.value), // node
-                            node.x, // x
-                            node.y // y
-                    );
-                    g.drawOval(node.x - 15, // x
-                            node.y - 15, // y
-                            30, 30 // height and width of circle
-                    );
-                }
-            }
-        }
-        /*draw lines*/
- /*
-        for (int i = 1, temp1 = 0; i < this.graphData.data.length; i++, temp1 = 0) {
-            for (int j = 0, period = 0; j < this.graphData.data[i].length; j++, period++) {
-                if (period >= 2) {
-                    temp1++;
-                    period = 0;
-                }
-                if (this.graphData.data[i][j].valid) {
-                    g.drawLine(
-                            this.graphData.data[i - 1][temp1].x, // start x
-                            this.graphData.data[i - 1][temp1].y, // start y
-                            this.graphData.data[i][j].x, // end x
-                            this.graphData.data[i][j].y // end y
-                    );
-                }
-            }
-        }
-         */
+
+        this.drawNodes(this.tree, g); // draw data
+        this.drawLines(this.tree, g); // draw lines
+
     }
 
     private void drawNodes(TreeNode tree, Graphics g) {
@@ -83,6 +49,23 @@ public class TreeCanvas extends Canvas {
         );
         this.drawNodes(tree.left, g);
         this.drawNodes(tree.right, g);
+    }
+
+    private void drawLines(TreeNode tree, Graphics g) {
+        if (tree == null) {
+            return;
+        }
+        this.drawLines(tree.left, g);
+        this.drawLines(tree.right, g);
+        if (tree.parent == null) {
+            return;
+        }
+        g.drawLine(
+                tree.pos_x, // start x
+                tree.pos_y, // start y
+                tree.parent.pos_x, // end x
+                tree.parent.pos_y // end y
+        );
     }
 
 }
