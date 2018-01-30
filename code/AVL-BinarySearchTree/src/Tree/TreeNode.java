@@ -8,7 +8,7 @@ package Tree;
 public class TreeNode {
 
     public TreeNode left, right, parent;
-    public int value, height, depth;
+    public int value, height;
     public int pos_x, pos_y;
 
     /**
@@ -18,7 +18,7 @@ public class TreeNode {
      */
     public TreeNode(int value) {
         this.value = value;
-        this.height = this.depth = 0;
+        this.height = 0;
         this.left = this.right = null;
     }
 }

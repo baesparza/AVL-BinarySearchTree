@@ -41,7 +41,7 @@ public class Application {
                     root = avl.removeNode(root, inputMessage("Insert a number: "));
                     break;
                 case 3: // print tree on console
-                    System.out.println("\tTree:\n\tv, h, p");
+                    System.out.println("\tTree:\n\tv, h");
                     avl.traverse(root);
                     break;
             }

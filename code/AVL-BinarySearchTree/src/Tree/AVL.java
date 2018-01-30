@@ -19,9 +19,7 @@ public class AVL {
             return;
         }
         this.traverse(tree.left);
-        System.out.println("\t" + tree.value + ", " + tree.height + ", "
-                + ((tree.parent == null) ? "null" : tree.parent.value) + ", " + tree.depth
-                + ", " + tree.pos_x + ", " + tree.pos_y);
+        System.out.println("\t" + tree.value + ", " + tree.height);
         this.traverse(tree.right);
     }
 

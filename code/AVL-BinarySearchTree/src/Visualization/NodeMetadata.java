@@ -43,9 +43,8 @@ public class NodeMetadata {
         }
         // set parent and depth
         current.parent = parent;
-        current.depth = depth;
 
-        current.pos_y = (current.depth + 1) * this.heightSeparation;
+        current.pos_y = (depth + 1) * this.heightSeparation;
         current.pos_x = ((this.size / this.items[depth]) / 2) + (this.size / this.items[depth] * this.positions[depth]);
 
         this.positions[depth]++; // increment index's
