@@ -29,28 +29,26 @@ public class NodeMetadata {
      * @param current node were parent will be linked
      * @param parent parent of current node
      */
-    public void updateMetadata(TreeNode current, TreeNode parent, int depth) {
+    public void updateMetadata(TreeNode current, int depth) {
         if (current == null) {
             try {
                 this.positions[depth]++;
                 // push back null pointes
-                this.updateMetadata(null, current, depth + 1);
-                this.updateMetadata(null, current, depth + 1);
+                this.updateMetadata(null, depth + 1);
+                this.updateMetadata(null, depth + 1);
             } catch (java.lang.ArrayIndexOutOfBoundsException e) {
                 // stop pushin elements when index is out of range
             }
             return;
         }
-        // set parent and depth
-        current.parent = parent;
 
         current.pos_y = (depth + 1) * this.heightSeparation;
         current.pos_x = ((this.size / this.items[depth]) / 2) + (this.size / this.items[depth] * this.positions[depth]);
 
         this.positions[depth]++; // increment index's
 
-        this.updateMetadata(current.left, current, depth + 1);
-        this.updateMetadata(current.right, current, depth + 1);
+        this.updateMetadata(current.left, depth + 1);
+        this.updateMetadata(current.right, depth + 1);
     }
 
     /**
@@ -74,7 +72,7 @@ public class NodeMetadata {
             this.positions[i] = 0; // set positions to 0
             this.items[i] = size;
         }
-        this.updateMetadata(tree, null, 0);
+        this.updateMetadata(tree, 0);
 
     }
 }

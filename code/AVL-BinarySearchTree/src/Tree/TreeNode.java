@@ -7,7 +7,7 @@ package Tree;
  */
 public class TreeNode {
 
-    public TreeNode left, right, parent;
+    public TreeNode left, right;
     public int value, height;
     public int pos_x, pos_y;
 

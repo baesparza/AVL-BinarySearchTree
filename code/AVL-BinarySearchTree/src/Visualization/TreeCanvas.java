@@ -52,14 +52,14 @@ public class TreeCanvas extends Canvas {
         if (tree == null) {
             return;
         }
-
+        if (tree.left != null) {
+            g.drawLine(tree.left.pos_x, tree.left.pos_y, tree.pos_x, tree.pos_y); // sx, sy, ex, ey
+        }
+        if (tree.right != null) {
+            g.drawLine(tree.right.pos_x, tree.right.pos_y, tree.pos_x, tree.pos_y); // sx, sy, ex, ey
+        }
         this.drawLines(tree.left, g);
         this.drawLines(tree.right, g);
-
-        if (tree.parent == null) {
-            return;
-        }
-        g.drawLine(tree.pos_x, tree.pos_y, tree.parent.pos_x, tree.parent.pos_y); // sx, sy, ex, ey
     }
 
 }
