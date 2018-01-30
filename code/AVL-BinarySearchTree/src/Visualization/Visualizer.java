@@ -33,7 +33,8 @@ public class Visualizer extends JFrame {
      * @param tree new data to update
      */
     public void repaintTree(TreeNode tree) {
-        this.canvas.graphData.setData(tree); // set new data
+        this.canvas.tree = tree;// set new meta data
+        this.canvas.nodeMetadata.setData(tree); // update new metadata
         this.canvas.repaint(); // repaint
     }
 

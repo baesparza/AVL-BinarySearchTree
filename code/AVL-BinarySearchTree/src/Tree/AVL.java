@@ -5,6 +5,8 @@ package Tree;
  * @author baesparza
  */
 public class AVL {
+    
+    private int[] positions, items; // positions and items per row
 
     /**
      * Traverse tree in order
@@ -19,7 +21,7 @@ public class AVL {
         this.traverse(tree.left);
         System.out.println("\t" + tree.value + ", " + tree.height + ", "
                 + ((tree.parent == null) ? "null" : tree.parent.value) + ", " + tree.depth
-                + ", " + tree.pos_X + ", " + tree.pos_y);
+                + ", " + tree.pos_x + ", " + tree.pos_y);
         this.traverse(tree.right);
     }
 
@@ -247,34 +249,5 @@ public class AVL {
         }
 
         return current;
-    }
-
-    /**
-     * Calculate depth of a node (height from the root)
-     *
-     * @param tree
-     * @return
-     */
-    private int getDepth(TreeNode tree) {
-        return (tree != null) ? tree.depth : -1;
-    }
-
-    /**
-     * Update parents of nodes by linking, depth of a node
-     *
-     * @param current node were parent will be linked
-     * @param parent parent of current node
-     */
-    public void updateMetadata(TreeNode current, TreeNode parent) {
-        if (current == null) {
-            return; // avoid infinite loop
-        }
-        current.parent = parent;
-        current.depth = this.getDepth(parent) + 1;
-
-        current.pos_y = (current.depth + 1) * 50;
-
-        this.updateMetadata(current.left, current);
-        this.updateMetadata(current.right, current);
     }
 }

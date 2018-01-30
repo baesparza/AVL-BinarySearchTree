@@ -46,7 +46,6 @@ public class Application {
                     break;
             }
             // update frame
-            avl.updateMetadata(root, null);
             frame.repaintTree(root);
         }
     }

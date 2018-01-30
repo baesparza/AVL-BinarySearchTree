@@ -9,7 +9,7 @@ public class TreeNode {
 
     public TreeNode left, right, parent;
     public int value, height, depth;
-    public int pos_X, pos_y;
+    public int pos_x, pos_y;
 
     /**
      * Constructor initialize data and pointer to other nodes
