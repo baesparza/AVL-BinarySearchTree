@@ -3,6 +3,7 @@ package Application;
 import Visualization.Visualizer;
 import Tree.TreeNode;
 import Tree.AVL;
+import Visualization.NodeMetadata;
 import java.util.Scanner;
 
 /**
@@ -18,8 +19,11 @@ public class Application {
 
     public static void main(String[] args) {
 
+        int size = 800; // size of canvas
+
         AVL avl = new AVL();// methods to work with AVL tree
-        Visualizer frame = new Visualizer(800); // window
+        Visualizer frame = new Visualizer(size); // window
+        NodeMetadata nodeMetadata = new NodeMetadata(size); // stored graphData
 
         TreeNode root = null; // root of the new tree
 
@@ -41,11 +45,13 @@ public class Application {
                     root = avl.removeNode(root, inputMessage("Insert a number: "));
                     break;
                 case 3: // print tree on console
-                    System.out.println("\tTree:\n\tv, h");
+                    System.out.println("Tree:");
                     avl.traverse(root);
+                    System.out.println();
                     break;
             }
             // update frame
+            nodeMetadata.setData(root);
             frame.repaintTree(root);
         }
     }

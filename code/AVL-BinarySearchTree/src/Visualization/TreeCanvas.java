@@ -10,7 +10,6 @@ import java.awt.Graphics;
  */
 public class TreeCanvas extends Canvas {
 
-    public NodeMetadata nodeMetadata; // stored graphData
     public TreeNode tree;
 
     /**
@@ -19,7 +18,6 @@ public class TreeCanvas extends Canvas {
      * @param size of the canvas
      */
     public TreeCanvas(int size) {
-        this.nodeMetadata = new NodeMetadata(size);
 
         /*Initialize data*/
         this.tree = null;

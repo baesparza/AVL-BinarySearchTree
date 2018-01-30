@@ -5,7 +5,7 @@ package Tree;
  * @author baesparza
  */
 public class AVL {
-    
+
     private int[] positions, items; // positions and items per row
 
     /**
@@ -19,7 +19,7 @@ public class AVL {
             return;
         }
         this.traverse(tree.left);
-        System.out.println("\t" + tree.value + ", " + tree.height);
+        System.out.print(tree.value + ", ");
         this.traverse(tree.right);
     }
 

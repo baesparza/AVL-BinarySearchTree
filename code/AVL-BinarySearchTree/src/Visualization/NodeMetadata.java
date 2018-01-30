@@ -27,7 +27,7 @@ public class NodeMetadata {
      * x and y
      *
      * @param current node were parent will be linked
-     * @param parent parent of current node
+     * @param depth distance from the root tho this node
      */
     public void updateMetadata(TreeNode current, int depth) {
         if (current == null) {
@@ -68,9 +68,9 @@ public class NodeMetadata {
         this.items = new int[tree.height + 1]; // nodes per wor
 
         // i is index of array; size number of spaces per row and duplicate each loop
-        for (int i = 0, size = 1; i < tree.height + 1; i++, size *= 2) {
+        for (int i = 0, elements_row = 1; i < tree.height + 1; i++, elements_row *= 2) {
             this.positions[i] = 0; // set positions to 0
-            this.items[i] = size;
+            this.items[i] = elements_row;
         }
         this.updateMetadata(tree, 0);
 
