@@ -40,12 +40,13 @@ public class Application {
                 case 2: // remove node
                     root = avl.removeNode(root, inputMessage("Insert a number: "));
                     break;
-                case 3: // print tree
-                    System.out.println("\tTree:\n\tv, h");
+                case 3: // print tree on console
+                    System.out.println("\tTree:\n\tv, h, p");
                     avl.traverse(root);
                     break;
             }
             // update frame
+            avl.updateMetadata(root, null);
             frame.repaintTree(root);
         }
     }

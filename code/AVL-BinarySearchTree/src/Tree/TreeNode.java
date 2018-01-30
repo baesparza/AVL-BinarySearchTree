@@ -7,8 +7,9 @@ package Tree;
  */
 public class TreeNode {
 
-    public TreeNode left, right;
-    public int value, height;
+    public TreeNode left, right, parent;
+    public int value, height, depth;
+    public int pos_X, pos_y;
 
     /**
      * Constructor initialize data and pointer to other nodes
@@ -17,7 +18,7 @@ public class TreeNode {
      */
     public TreeNode(int value) {
         this.value = value;
-        this.height = 0;
+        this.height = this.depth = 0;
         this.left = this.right = null;
     }
 }

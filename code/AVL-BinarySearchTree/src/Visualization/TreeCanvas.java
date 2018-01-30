@@ -13,6 +13,7 @@ public class TreeCanvas extends Canvas {
 
     /**
      * Initialize graphData
+     *
      * @param size of the canvas
      */
     public TreeCanvas(int size) {
@@ -24,7 +25,8 @@ public class TreeCanvas extends Canvas {
 
     /**
      * Paint tree
-     * @param g 
+     *
+     * @param g
      */
     @Override
     public void paint(Graphics g) {
